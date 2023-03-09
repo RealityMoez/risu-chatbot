@@ -22,6 +22,7 @@ function addChatbotMessage(message, isBot)
                 chatbotMessageContainer.appendChild(messageElem);
                 botReplied = true;
                 // scroll to the bottom of the chat container after adding the message
+                chatbotMessageContainer.scrollTop = chatbotMessageContainer.scrollHeight;
             }
         }, 1500);
         chatbotMessageContainer.scrollTop = chatbotMessageContainer.scrollHeight;
