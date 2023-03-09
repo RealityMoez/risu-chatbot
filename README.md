@@ -1,1 +1,3 @@
-# Still in development ..
+# OpenAI GPT Chat bot
+
+Still in development..
