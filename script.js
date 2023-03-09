@@ -26,7 +26,6 @@ function addChatbotMessage(message, isBot)
             }
         }, 1500);
         chatbotMessageContainer.scrollTop = chatbotMessageContainer.scrollHeight;
-
     } 
     else
     {
