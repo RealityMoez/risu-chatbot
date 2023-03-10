@@ -1,14 +1,14 @@
-const chatbotContainer = document.querySelector('.chatbot-container');
-const chatbotMessageContainer = chatbotContainer.querySelector('.chatbot-message-container');
-const chatbotInput = chatbotContainer.querySelector('.chatbot-input');
-const chatbotSendBtn = chatbotContainer.querySelector('.chatbot-send-btn');
+const chatContainer = document.querySelector('.chat-container');
+const chatMessagesContainer = chatContainer.querySelector('.chat-messages-container');
+const chatInput = chatContainer.querySelector('.chat-input');
+const chatSendBtn = chatContainer.querySelector('.chat-send-btn');
 
 let botReplied = true;
 function addChatbotMessage(message, isBot)
 {
     // create the message element
     const messageElem = document.createElement('div');
-    messageElem.classList.add('chatbot-message');
+    messageElem.classList.add('chat-message');
 
     if (isBot)
     {
@@ -19,13 +19,13 @@ function addChatbotMessage(message, isBot)
             {
                 messageElem.classList.add('bot-message');
                 messageElem.textContent = message;
-                chatbotMessageContainer.appendChild(messageElem);
+                chatMessagesContainer.appendChild(messageElem);
                 botReplied = true;
                 // scroll to the bottom of the chat container after adding the message
-                chatbotMessageContainer.scrollTop = chatbotMessageContainer.scrollHeight;
+                chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
             }
         }, 1500);
-        chatbotMessageContainer.scrollTop = chatbotMessageContainer.scrollHeight;
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
     } 
     else
     {
@@ -33,11 +33,11 @@ function addChatbotMessage(message, isBot)
         {
             messageElem.classList.add('user-message');
             messageElem.textContent = message;
-            chatbotMessageContainer.appendChild(messageElem);
+            chatMessagesContainer.appendChild(messageElem);
             // scroll to the bottom of the chat container after adding the message
-            chatbotMessageContainer.scrollTop = chatbotMessageContainer.scrollHeight;
+            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
             botReplied = false;
-            chatbotInput.value = '';
+            chatInput.value = '';
         }
     }
 }
@@ -54,9 +54,9 @@ function respondToMessage(message)
     return responses[Math.floor(Math.random() * responses.length)];
 }
 
-chatbotSendBtn.addEventListener("click", () =>
+chatSendBtn.addEventListener("click", () =>
 {
-    const inputMessage = chatbotInput.value;
+    const inputMessage = chatInput.value;
     if (inputMessage)
     {
         addChatbotMessage(inputMessage, false);
