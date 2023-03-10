@@ -3,7 +3,12 @@ const chatMessagesContainer = chatContainer.querySelector('.chat-messages-contai
 const chatInput = chatContainer.querySelector('.chat-input');
 const chatSendBtn = chatContainer.querySelector('.chat-send-btn');
 
+var loadingElement = document.createElement('div');
+
+
 let botReplied = true;
+let loading = false;
+
 function addChatbotMessage(message, isBot)
 {
     const messageElem = document.createElement('div');
@@ -11,43 +16,56 @@ function addChatbotMessage(message, isBot)
 
     if (isBot && !botReplied)
     {
-        const loadingElement = document.createElement('div');
-        loadingElement.classList.add('loading-dots');
+        if (!loading)
+        {
+            loadingElement = document.createElement('div');
+            loadingElement.classList.add('loading-dots');
 
-        const loadingDot1 = document.createElement('span');
-        const loadingDot2 = document.createElement('span');
-        const loadingDot3 = document.createElement('span');
+            const loadingDot1 = document.createElement('span');
+            const loadingDot2 = document.createElement('span');
+            const loadingDot3 = document.createElement('span');
 
-        loadingElement.appendChild(loadingDot1);
-        loadingElement.appendChild(loadingDot2);
-        loadingElement.appendChild(loadingDot3);
+            loadingElement.appendChild(loadingDot1);
+            loadingElement.appendChild(loadingDot2);
+            loadingElement.appendChild(loadingDot3);
+            
+            messageElem.appendChild(loadingElement);
 
-        messageElem.appendChild(loadingElement);
+            chatMessagesContainer.appendChild(messageElem);
 
-        chatMessagesContainer.appendChild(messageElem);
+            loading = true;
+        }
 
-        console.log("waiting response..");
-        
         setTimeout(() =>
         {
-            console.log("responded");
-            messageElem.classList.add('bot-message');
-            messageElem.textContent = message;
-            chatMessagesContainer.appendChild(messageElem);
-            botReplied = true;
-            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-        }, 1500);
+            if (loading)
+            {
+                messageElem.appendChild(loadingElement);
+                messageElem.removeChild(loadingElement);
+                loadingElement.remove();
+
+                chatMessagesContainer.removeChild(chatMessagesContainer.lastChild);
+
+                console.log("responded");
+                messageElem.classList.add('bot-message');
+                messageElem.textContent = message;
+                chatMessagesContainer.appendChild(messageElem);
+                botReplied = true;
+                loading = false;
+                chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+            }
+        }, 1800);
         chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
     }
     else
     {
         if (botReplied)
         {
-            botReplied = false;
             messageElem.classList.add('user-message');
             messageElem.textContent = message;
             chatMessagesContainer.appendChild(messageElem);
             chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+            botReplied = false;
             chatInput.value = '';
         }
     }
@@ -56,7 +74,7 @@ function addChatbotMessage(message, isBot)
 
 function respondToMessage(message)
 {
-    // Replace this with your own logic to generate bot response
+    // OpenAI GPT-3 response
     const responses = [
         "How can I help you?",
         "I'm sorry, I didn't understand.",
