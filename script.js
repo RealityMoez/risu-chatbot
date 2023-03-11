@@ -54,8 +54,8 @@ const XHR = new XMLHttpRequest();
 XHR.open('GET', API_FILE_PATH, false);
 XHR.send();
 const API = XHR.responseText;
-
 const OPENAI_API_KEY = API.trim();
+
 
 async function respondToMessage(userPrompt)
 {
