@@ -1,5 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Josefin+Sans:wght@100;200;400;700&family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Questrial&family=Righteous&family=Lobster&display=swap');
 
+/*------------------CUSTOM SCROLL BAR SUPPORTING CHROME - EDGE - OPERA BROWSERS--------------*/
+/* Style the scrollbar track */
+::-webkit-scrollbar-track
+{
+    background-color: transparent;
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb
+{
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+    background-color: rgba(0, 90, 246, 0.9);
+}
+
+/* Style the scrollbar */
+::-webkit-scrollbar
+{
+    width: 10px;
+}
 
 *
 {
@@ -8,20 +32,20 @@
 
 body
 {
-    background: linear-gradient(to bottom, black 0%, rgb(97, 52, 0) 40%, rgb(0, 1, 79) 80%, black 100%), transparent;
+    background: linear-gradient(to bottom, black 0%, rgb(97, 52, 0) 40%, rgb(0, 1, 79) 80%, black 100%);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
 
-/* chatbot container style */
-.chatbot-container
+/* chat container style */
+.chat-container
 {
     width: 50%;
     height: 90%;
     background-color: #393939;
     border: 1px solid #000000;
-    border-radius: 15px;
+    border-radius: 5px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -31,10 +55,10 @@ body
     transform: translateX(-50%);
 }
 
-/* chatbot header style */
-.chatbot-header
+/* chat header style */
+.chat-header
 {
-    background-color: #00531a;
+    background-color: rgb(0, 1, 79);
     color: #fff;
     padding: 10px;
     font-size: 18px;
@@ -44,21 +68,21 @@ body
     text-transform: uppercase;
 }
 
-/* chatbot message container style */
-.chatbot-message-container
+/* chat message container style */
+.chat-messages-container
 {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
 }
 
-/* chatbot message style */
-.chatbot-message
+/* chat message style */
+.chat-message
 {
     padding: 10px 20px 10px 20px;
-    border-radius: 15px;
+    border-radius: 20px;
     margin-bottom: 10px;
-    width: max-content;
+    max-width: max-content;
 }
 
 /* user message style */
@@ -75,52 +99,53 @@ body
     color: #fff;
 }
 
-/* chatbot input container style */
-.chatbot-input-container
+/* chat input container style */
+.chat-input-container
 {
     display: flex;
     align-items: center;
     padding: 10px;
 }
 
-/* chatbot input style */
-.chatbot-input
+/* chat input style */
+.chat-input
 {
     flex: 1;
     padding: 10px;
     border: none;
-    border-radius: 15px;
+    border-radius: 5px;
     margin-right: 10px;
+    min-height: 20px;
+    max-height: 150px;
 }
 
-/* chatbot send button style */
-.chatbot-send-btn
+/* chat send button style */
+.chat-send-btn
 {
     width: 20%;
-    background-color: #4caf50;
+    background-color: rgb(97, 52, 0);
     color: #fff;
-    border: none;
-    border-radius: 15px;
+    border: 1px solid rgba(0, 90, 246, 0.9);
+    border-radius: 5px;
     padding: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
     letter-spacing: 1px;
 }
 
-.chatbot-send-btn:hover
+.chat-send-btn:hover
 {
     background-color: black;
     color: white;
+    border: 1px solid white;
 }
 
-.chatbot-message-container
+.chat-messages-container
 {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
 }
 
-.chatbot-message-container div
+.chat-messages-container div
 {
     margin: 10px 0;
     opacity: 0;
@@ -144,3 +169,49 @@ body
     }
 }
 
+.loading-dots
+{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.loading-dots span
+{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 0;
+}
+
+.loading-dots span:nth-child(1)
+{
+    animation: loading-anim 1s infinite;
+}
+
+.loading-dots span:nth-child(2)
+{
+    animation: loading-anim 1s infinite 0.33s;
+}
+
+.loading-dots span:nth-child(3)
+{
+    animation: loading-anim 1s infinite 0.66s;
+}
+
+@keyframes loading-anim
+{
+    from
+    {
+        opacity: 0;
+        transform: translateY(0);
+    }
+
+    to
+    {
+        opacity: 1;
+        transform: translateY(-6px);
+    }
+}
