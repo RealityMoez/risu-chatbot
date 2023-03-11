@@ -3,10 +3,7 @@ const chatMessagesContainer = chatContainer.querySelector('.chat-messages-contai
 const chatInput = chatContainer.querySelector('.chat-input');
 const chatSendBtn = chatContainer.querySelector('.chat-send-btn');
 
-const OPENAI_API_KEY = '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';
-
-var messageElem = document.createElement('div');
-
+var divElement = document.createElement('div');
 var loadingElement = document.createElement('div');
 
 let botReplied = true;
@@ -18,8 +15,8 @@ let resetConvo = conversation;
 
 function addChatMessage(message, isBot)
 {
-    messageElem = document.createElement('div');
-    messageElem.classList.add('chat-message');
+    divElement = document.createElement('div');
+    divElement.classList.add('chat-message');
 
     if (isBot && !botReplied)
     {
@@ -27,12 +24,10 @@ function addChatMessage(message, isBot)
         {
             if (loading)
             {
-                
-
                 chatMessagesContainer.removeChild(chatMessagesContainer.lastChild);
 
-                messageElem.classList.add('bot-message');
-                chatMessagesContainer.appendChild(messageElem);
+                divElement.classList.add('bot-message');
+                chatMessagesContainer.appendChild(divElement);
                 botReplied = true;
                 loading = false;
                 chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
@@ -44,15 +39,17 @@ function addChatMessage(message, isBot)
     {
         if (botReplied)
         {
-            messageElem.classList.add('user-message');
-            messageElem.textContent = `${message}`;
-            chatMessagesContainer.appendChild(messageElem);
+            divElement.classList.add('user-message');
+            divElement.textContent = `${message}`;
+            chatMessagesContainer.appendChild(divElement);
             chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
             botReplied = false;
             chatInput.value = '';
         }
     }
 }
+
+const OPENAI_API_KEY = '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';
 
 async function respondToMessage(userPrompt)
 {
@@ -84,9 +81,8 @@ async function respondToMessage(userPrompt)
         {
             setTimeout(() => 
             {
-                const botResponse = response.data.choices[0].text; //.trim();
-                //console.log('response value: \n', botResponse);
-                messageElem.textContent = `${botResponse}`;
+                const botResponse = response.data.choices[0].text;
+                divElement.textContent = `${botResponse}`;
                 return botResponse;
             }, 0);
         }
@@ -108,7 +104,8 @@ chatSendBtn.addEventListener("click", async (e) =>
 
 chatInput.addEventListener("keypress", async (e) => 
 {
-    const keyCode = e.which || e.keyCode; // get the key code
+    // Get the pressed key code "Enter key = 13"
+    const keyCode = e.which || e.keyCode;
     if (keyCode === 13 && !e.shiftKey)
     {
         await showMessage(e);
@@ -130,8 +127,8 @@ async function showMessage(event)
 
 function animateLoading()
 {
-    messageElem = document.createElement('div');
-    messageElem.classList.add('chat-message');
+    divElement = document.createElement('div');
+    divElement.classList.add('chat-message');
 
     if (!loading)
     {
@@ -146,17 +143,10 @@ function animateLoading()
         loadingElement.appendChild(loadingDot2);
         loadingElement.appendChild(loadingDot3);
 
-        messageElem.appendChild(loadingElement);
-
-        chatMessagesContainer.appendChild(messageElem);
-
+        divElement.appendChild(loadingElement);
+        chatMessagesContainer.appendChild(divElement);
+        
         loading = true;
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
     }
 }
-/* const responses = [
-        "How can I help you?",
-        "I'm sorry, I didn't understand.",
-        "Can you please rephrase that?",
-        "I don't get what you mean.",
-    ];
-    return responses[Math.floor(Math.random() * responses.length)]; */
