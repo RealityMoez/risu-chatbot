@@ -49,7 +49,7 @@ function addChatMessage(message, isBot)
     }
 }
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 async function respondToMessage(userPrompt)
 {
