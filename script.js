@@ -49,7 +49,13 @@ function addChatMessage(message, isBot)
     }
 }
 
-const OPENAI_API_KEY = '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';
+const API_FILE_PATH = 'openai_api.txt';
+const XHR = new XMLHttpRequest();
+XHR.open('GET', API_FILE_PATH, false);
+XHR.send();
+const API = XHR.responseText;
+
+const OPENAI_API_KEY = API.trim();
 
 async function respondToMessage(userPrompt)
 {
