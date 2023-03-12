@@ -38,6 +38,44 @@ body
     background-attachment: fixed;
 }
 
+footer
+{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    position: absolute;
+    bottom: 3%;
+    width: 100%;
+    text-align: center;
+}
+
+footer h3
+{
+    opacity: 0.8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: small;
+    color: white;
+    display: inline-block;
+    margin: 0 5px;
+}
+footer h3 a
+{
+    font-weight: 200;
+    font-size: 1rem;
+    text-transform: none;
+    padding-left: 3px;
+    text-decoration: none;
+    color: rgb(221, 118, 0);
+    transition: 0.2s ease;
+}
+
+footer h3 a:hover
+{
+    opacity: 100%;
+    color: cyan;
+}
+
 /* chat container style */
 .chat-container
 {
