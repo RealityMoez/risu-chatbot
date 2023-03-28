@@ -56,7 +56,7 @@ XHR.send();
 const API = XHR.responseText;
 const OPENAI_API_KEY = API.trim();
 
-
+// Sends a message to the GPT-3 API and appends the response to the chat messages container.
 async function respondToMessage(userPrompt)
 {
     // Save the conversation
