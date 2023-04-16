@@ -69,11 +69,11 @@ async function respondToMessage(userPrompt)
             {
                 prompt: conversation,
                 model: 'text-davinci-003',
-                temperature: 0.85,
-                max_tokens: 200,
-                top_p: 0,
-                frequency_penalty: 1,
-                presence_penalty: 1,
+                temperature: 0.65,
+                max_tokens: 500,
+                top_p: 1,
+                frequency_penalty: 0.8,
+                presence_penalty: 0.6,
             },
             {
                 headers: {
