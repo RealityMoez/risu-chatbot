@@ -28,6 +28,10 @@
             "headers": {
                 "cache-control": "max-age=31536000,immutable"
             }
+        },
+        {
+            "src": "/.*",
+            "dest": "/public/index.html"
         }
     ]
 }
