@@ -1,7 +1,6 @@
 // Import required modules
 const express = require('express');
 const dotenv = require('dotenv');
-//const openai = require('openai');
 const path = require('path');
 
 // Load environment variables from .env file
@@ -25,9 +24,13 @@ app.get('/', (req, res) =>
 {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-// Start the server
+
+/* // Start the server
 const port = process.env.PORT || 3000;
 app.listen(port, () =>
 {
     console.log(`Server is running on http://localhost:${port}`);
-});
+}); */
+
+// Export the app for Vercel deployment
+module.exports = app;
