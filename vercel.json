@@ -12,26 +12,13 @@
     ],
     "routes": [
         {
-            "src": "/(.*).js",
-            "headers": {
-                "cache-control": "max-age=31536000,immutable"
-            }
-        },
-        {
-            "src": "/(.*).css",
-            "headers": {
-                "cache-control": "max-age=31536000,immutable"
-            }
-        },
-        {
-            "src": "/(.*).(js|css).map",
-            "headers": {
-                "cache-control": "max-age=31536000,immutable"
-            }
+            "src": "/api/config",
+            "dest": "/api/config.js"
         },
         {
             "src": "/.*",
-            "dest": "/public/index.html"
+            "dest": "/public/index.html",
+            "continue": true
         }
     ]
 }
