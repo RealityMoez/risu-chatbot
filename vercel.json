@@ -16,9 +16,12 @@
             "dest": "/api/config.js"
         },
         {
+            "src": "/(.*).(js|css|map)",
+            "dest": "/public/$1.$2"
+        },
+        {
             "src": "/.*",
-            "dest": "/public/index.html",
-            "continue": true
+            "dest": "/public/index.html"
         }
     ]
 }
