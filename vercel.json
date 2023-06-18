@@ -1,0 +1,33 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "server.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/config",
+            "dest": "/api/config.js"
+        },
+        {
+            "src": "/(.*).js",
+            "headers": {
+                "cache-control": "max-age=31536000,immutable"
+            }
+        },
+        {
+            "src": "/(.*).css",
+            "headers": {
+                "cache-control": "max-age=31536000,immutable"
+            }
+        },
+        {
+            "src": "/(.*).(js|css).map",
+            "headers": {
+                "cache-control": "max-age=31536000,immutable"
+            }
+        }
+    ]
+}
