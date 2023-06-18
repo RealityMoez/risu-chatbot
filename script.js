@@ -72,12 +72,7 @@ function addChatMessage(message, isBot)
     }
 }
 
-const API_FILE_PATH = 'openai_api.txt';
-const XHR = new XMLHttpRequest();
-XHR.open('GET', API_FILE_PATH, false);
-XHR.send();
-const API = XHR.responseText;
-const OPENAI_API_KEY = API.trim();
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // Sends a message to the GPT-3 API and appends the response to the chat messages container.
 async function respondToMessage(userPrompt)
