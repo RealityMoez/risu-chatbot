@@ -74,12 +74,14 @@ function addChatMessage(message, isBot)
 
 var OPENAI_API = '';
 
-fetch('/api/config')
-    .then(response => response.json())
-    .then(data =>
-    {
-        OPENAI_API = data.OPENAI_API_KEY;
-    });
+async function fetchAPIKey()
+{
+    const response = await fetch("/api/config");
+    const data = await response.json();
+    OPENAI_API = data.OPENAI_API_KEY;
+}
+
+fetchAPIKey();
 
 
 // Sends a message to the GPT-3 API and appends the response to the chat messages container.
