@@ -12,12 +12,18 @@ const app = express();
 // Set the static files directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Expose the OpenAI API key to the client-side code
+/* // Expose the OpenAI API key to the client-side code
 app.get('/api/config', (req, res) =>
 {
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     res.json({ OPENAI_API_KEY });
-});
+}); */
+
+// Expose the OpenAI API key to the client-side code
+const configHandler = (req, res) => {
+    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+    res.json({ OPENAI_API_KEY });
+    };
 
 // Set up a route for the homepage
 app.get('/', (req, res) =>
@@ -33,4 +39,4 @@ app.listen(port, () =>
 }); */
 
 // Export the app for Vercel deployment
-module.exports = app;
+module.exports = { config: configHandler };
