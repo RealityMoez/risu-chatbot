@@ -76,7 +76,7 @@ function addChatMessage(message, isBot)
 
 var OPENAI_API = '';
 
-fetch('/api/config')
+fetch('/')
     .then(response => response.json())
     .then(data =>
     {
