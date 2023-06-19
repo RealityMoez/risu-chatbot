@@ -13,7 +13,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Expose the OpenAI API key to the client-side code
-app.get('/', (req, res) =>
+app.get('/api/config', (req, res) =>
 {
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     res.json({ OPENAI_API_KEY });
