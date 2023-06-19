@@ -74,11 +74,16 @@ function addChatMessage(message, isBot)
 
 var OPENAI_API = '';
 
-fetch('/api/config')
-    .then(response => response.json())
-    .then(data =>
+fetch('https://risu.vercel.app/api/get_data')
+    .then((response) => response.json())
+    .then(({ apiKey }) =>
     {
-        OPENAI_API = data.OPENAI_API_KEY;
+        OPENAI_API = apiKey;
+        console.log('API Key:', apiKey);
+    })
+    .catch((error) =>
+    {
+        console.error('Error fetching API key:', error);
     });
 
 
