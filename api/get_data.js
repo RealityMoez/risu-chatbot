@@ -2,14 +2,13 @@ const fetch = require('node-fetch');
 
 module.exports = async (req, res) =>
 {
-    const API_KEY = process.env.OPENAI_API_KEY;
     try
     {
+        const API_KEY = process.env.API_KEY;
         res.status(200).json({ apiKey: API_KEY });
-    }
-    catch(error)
+    } catch(error)
     {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to fetch environment data' });
+        console.error('Error fetching API key:', error);
+        res.status(500).json({ error: 'Failed to fetch API key' });
     }
 };
