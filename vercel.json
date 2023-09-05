@@ -8,16 +8,12 @@
         {
             "src": "/api/**",
             "use": "@vercel/node"
-        },
-        {
-            "src": "/**/**",
-            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "/api/$1.js"
+            "dest": "/api/$1"
         },
         {
             "src": "/",
