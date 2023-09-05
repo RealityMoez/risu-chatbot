@@ -74,17 +74,64 @@ function addChatMessage(message, isBot)
     }
 }
 
-var OPENAI_API = '';
+// Check if the API key exists in the cookies
+let apiKey = getCookie("OPENAI_API_KEY");
+if(!apiKey)
+{
+    // If not, display the popup
+    document.getElementById("popup").style.display = "block";
+}
 
-fetch('/api/config')
-    .then(response => response.json())
-    .then(data =>
+// Function to store the API key in cookies
+function storeApiKey()
+{
+    let apiKey = document.getElementById("openaiApiKey").value;
+    if(apiKey)
     {
-        OPENAI_API = data.OPENAI_API_KEY;
-    });
+        setCookie("OPENAI_API_KEY", apiKey, 365); // Store the API key in a cookie for 365 days
+        document.getElementById("popup").style.display = "none"; // Hide the popup
+    }
+}
 
-CONVO = [];
-// Sends a message to the GPT-3 API and appends the response to the chat messages container.
+// Function to close the popup without storing the API key
+function closePopup()
+{
+    document.getElementById("popup").style.display = "none"; // Hide the popup
+}
+
+// Function to close the popup when clicking outside of it
+window.onclick = function(event) {
+    let popup = document.getElementById("popup");
+    if (event.target == popup) {
+        popup.style.display = "none";
+    }
+}
+
+// Function to set a cookie
+function setCookie(name, value, days)
+{
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+// Function to get a cookie
+function getCookie(name)
+{
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for(let i = 0;i < ca.length;i++)
+    {
+        let c = ca[i];
+        while(c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if(c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+
+// Sends a message to the GPT API and appends the response to the chat messages container.
 async function respondToMessage(userPrompt)
 {
     // Continue the conversation
@@ -93,31 +140,19 @@ async function respondToMessage(userPrompt)
     try
     {
         const response = await axios.post(
-            "https://api.openai.com/v1/chat/completions",
-            {
-                model: 'gpt-3.5-turbo',
-                messages: CONVO,
-                temperature: 0.7,
-                max_tokens: 600,
-                top_p: 1,
-                frequency_penalty: 0.8,
-                presence_penalty: 0.6,
-            },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${OPENAI_API}`,
-                },
-            }
+            "/api/chat",
+            { userPrompt, conversation: CONVO }
         );
 
         if(response)
         {
             setTimeout(() => 
             {
-                const botResponse = response.data.choices[0].message.content;
-                console.log(response.data.choices[0]);
-                console.log(response.data.usage);
+                const botResponse = response.data.message;
+                if(!botResponse)
+                {
+                    botResponse = response;
+                }
                 divElement.textContent = `${botResponse}`;
                 return botResponse;
             }, 0);
