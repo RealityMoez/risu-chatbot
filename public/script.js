@@ -83,7 +83,7 @@ fetch('/api/config')
         OPENAI_API = data.OPENAI_API_KEY;
     });
 
-
+CONVO = [];
 // Sends a message to the GPT-3 API and appends the response to the chat messages container.
 async function respondToMessage(userPrompt)
 {
