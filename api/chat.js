@@ -1,6 +1,6 @@
 const axios = require('axios');
 const cookie = require('cookie');
-//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
+
 module.exports = async (req, res) =>
 {
     let OPENAI_API_KEY = process.env.OPENAI_API_KEY;
