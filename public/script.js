@@ -99,14 +99,6 @@ function closePopup()
     document.getElementById("popup").style.display = "none"; // Hide the popup
 }
 
-// Function to close the popup when clicking outside of it
-window.onclick = function(event) {
-    let popup = document.getElementById("popup");
-    if (event.target == popup) {
-        popup.style.display = "none";
-    }
-}
-
 // Function to set a cookie
 function setCookie(name, value, days)
 {
