@@ -148,11 +148,29 @@ if (!apiKey) {
 // Add a health check function to test API connectivity
 async function checkApiHealth() {
     try {
-        // Use absolute URL to avoid path issues
+        console.log('Checking API health...');
+        // Use absolute URL with error handling
         const response = await fetch('/api/health');
-        const data = await response.json();
-        console.log('API Health Check:', data);
-        return data.status === 'ok';
+        
+        // Log response status for debugging
+        console.log('Health check response status:', response.status);
+        
+        // If response is not ok, throw an error
+        if (!response.ok) {
+            throw new Error(`Health check failed with status: ${response.status}`);
+        }
+        
+        // Try to parse the response as JSON
+        try {
+            const data = await response.json();
+            console.log('API Health Check Data:', data);
+            return data.status === 'ok';
+        } catch (parseError) {
+            // If we can't parse as JSON, log the text content
+            const textContent = await response.text();
+            console.error('Failed to parse health check response as JSON:', textContent);
+            throw new Error('Invalid JSON response from health check');
+        }
     } catch (error) {
         console.error('API Health Check Failed:', error);
         return false;
@@ -167,16 +185,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Find the function that makes the API call to chat endpoint
-async function respondToMessage(userPrompt)
-{
-    // Continue the conversation of previous messages (remeber previous messages)
+async function respondToMessage(userPrompt) {
+    // Continue the conversation of previous messages (remember previous messages)
     CONVO.push({ role: 'user', content: userPrompt });
     
-    // Get the base URL - always use the current origin
-    const baseUrl = window.location.origin;
-    
-    try
-    {
+    try {
+        console.log('Sending chat request...');
+        
+        // Use absolute URL for API call
         const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {
@@ -193,25 +209,42 @@ async function respondToMessage(userPrompt)
         // Log the full response for debugging
         console.log('API Response Status:', response.status);
         
-        const data = await response.json();
-
-        console.log('Client received response:', data); // Add client-side logging
-        
-        if(data?.message)
-        {
-            const botResponse = data.message;
-            // Add assistant's response to conversation history
-            CONVO.push({ role: 'assistant', content: botResponse });
-            return botResponse;
+        // If response is not ok, try to parse the error or get text content
+        if (!response.ok) {
+            try {
+                const errorData = await response.json();
+                console.error('API Error:', errorData);
+                throw new Error(errorData.message || `Request failed with status ${response.status}`);
+            } catch (parseError) {
+                // If we can't parse as JSON, log the text content
+                const textContent = await response.text();
+                console.error('Error response text:', textContent);
+                throw new Error(`Request failed with status ${response.status}`);
+            }
         }
-        throw new Error('Invalid response format');
-    }
-    catch(error)
-    {
-        console.error('Error:', error.response?.data || error.message);
         
-        // Handle API-specific errors
-        if (error.response?.status === 401) {
+        // Try to parse the successful response
+        try {
+            const data = await response.json();
+            console.log('Client received response:', data);
+            
+            if (data?.message) {
+                const botResponse = data.message;
+                // Add assistant's response to conversation history
+                CONVO.push({ role: 'assistant', content: botResponse });
+                return botResponse;
+            }
+            throw new Error('Invalid response format');
+        } catch (parseError) {
+            const textContent = await response.text();
+            console.error('Failed to parse response as JSON:', textContent);
+            throw new Error('Invalid JSON response from server');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        
+        // Handle specific errors
+        if (error.message.includes('401')) {
             // Show popup for re-entering API key
             clearAllCookies();
             document.getElementById("popup").style.display = "block";
@@ -219,19 +252,19 @@ async function respondToMessage(userPrompt)
             return "API key is invalid. Please enter a valid key.";
         }
         
-        if (error.response?.status === 413) {
+        if (error.message.includes('413')) {
             CONVO = resetConvo;
             return "Conversation length exceeded, it has been reset.";
         }
 
-        // If OpenAI rate limit is exceeded, suggest switching to GitHub token
-        if (error.response?.status === 429 && currentApiType === 'openai') {
+        // If OpenAI rate limit is exceeded
+        if (error.message.includes('429') && currentApiType === 'openai') {
             toggleApiType('github');
             document.getElementById("popup").style.display = "block";
-            return "OpenAI rate limit exceeded. Please consider using a GitHub token instead.";
+            return "OpenAI rate limit exceeded..";
         }
 
-        return `Error: ${error.response?.data?.message || error.message || 'An error occurred while processing your request.'}`;
+        return `Error: ${error.message || 'An error occurred while processing your request.'}`;
     }
 }
 

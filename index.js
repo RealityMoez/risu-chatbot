@@ -1,11 +1,8 @@
-// Root index file - redirects to the static site
-const { join } = require('path');
-const fs = require('fs');
+// Main entry point for Vercel deployment
+// This file simply re-exports the Express app from server.js
 
-// This file helps Vercel recognize this as a Node.js project
-// It's not actually used in production as the routes in vercel.json handle the routing
-module.exports = (req, res) => {
-  // Redirect to the static site
-  res.writeHead(302, { Location: '/index.html' });
-  res.end();
-}; 
+// Import the Express app
+const app = require('./server');
+
+// Export for Vercel serverless deployment
+module.exports = app; 
