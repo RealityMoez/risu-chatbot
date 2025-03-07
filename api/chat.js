@@ -1,4 +1,4 @@
-// Vercel Serverless Function for chat API endpoint
+// Vercel Serverless Function for Chat API
 const axios = require('axios');
 const cookie = require('cookie');
 

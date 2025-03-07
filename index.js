@@ -1,8 +1,5 @@
-// Main entry point for Vercel deployment
-// This file simply re-exports the Express app from server.js
-
-// Import the Express app
-const app = require('./server');
-
-// Export for Vercel serverless deployment
-module.exports = app; 
+// Simple redirect to the main application
+module.exports = (req, res) => {
+  res.writeHead(302, { Location: '/' });
+  res.end();
+};
