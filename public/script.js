@@ -145,7 +145,28 @@ if (!apiKey) {
     toggleApiType(apiType);
 }
 
-// Sends a message to the GPT API and appends the response to the chat messages container.
+// Add a health check function to test API connectivity
+async function checkApiHealth() {
+    try {
+        // Use absolute URL to avoid path issues
+        const response = await fetch('/api/health');
+        const data = await response.json();
+        console.log('API Health Check:', data);
+        return data.status === 'ok';
+    } catch (error) {
+        console.error('API Health Check Failed:', error);
+        return false;
+    }
+}
+
+// Call health check on page load
+document.addEventListener('DOMContentLoaded', () => {
+    checkApiHealth().then(isHealthy => {
+        console.log('API Health Status:', isHealthy ? 'OK' : 'Failed');
+    });
+});
+
+// Find the function that makes the API call to chat endpoint
 async function respondToMessage(userPrompt)
 {
     // Continue the conversation of previous messages (remeber previous messages)
@@ -156,26 +177,29 @@ async function respondToMessage(userPrompt)
     
     try
     {
-        const response = await axios.post(
-            `${baseUrl}/api/chat`,
-            { 
-                userPrompt, 
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userPrompt,
                 conversation: CONVO,
                 apiType: getCookie("API_TYPE") || 'openai' // Send API type to backend
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            }
-        );
-
-        console.log('Client received response:', response.data); // Add client-side logging
+            }),
+            credentials: 'include'
+        });
         
-        if(response?.data?.message)
+        // Log the full response for debugging
+        console.log('API Response Status:', response.status);
+        
+        const data = await response.json();
+
+        console.log('Client received response:', data); // Add client-side logging
+        
+        if(data?.message)
         {
-            const botResponse = response.data.message;
+            const botResponse = data.message;
             // Add assistant's response to conversation history
             CONVO.push({ role: 'assistant', content: botResponse });
             return botResponse;
