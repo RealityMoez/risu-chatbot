@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Risu</title>
-    <link rel="icon" href="/risu.jpg">
+    <link rel="icon" href="/risu.png">
     <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -15,7 +15,7 @@
     <div class="chat-container">
         <div class="chat-header">Risu</div>
         <div class="chat-messages-container">
-            <!-- messages will be appended here -->
+            <!-- chat messages will be appended here -->
         </div>
         <div class="chat-input-container">
             <textarea class="chat-input" type="text" placeholder="Type your message..." rows="1" required></textarea>
@@ -30,15 +30,29 @@
         </h3>
     </footer>
 
-    <div id="popup">
-        <div id="popup-content">
-            <h2>Enter OpenAI API Key</h2>
-            <input type="password" id="openaiApiKey" />
-            <button onclick="storeApiKey()">OK</button>
-            <button onclick="closePopup()">Cancel</button>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h2>API Key Required</h2>
+            <div class="api-toggle">
+                <button id="openaiToggle" class="toggle-btn active" onclick="toggleApiType('openai')">OpenAI API</button>
+                <button id="githubToggle" class="toggle-btn" onclick="toggleApiType('github')">GitHub Token</button>
+            </div>
+            <div id="openaiInput" class="api-input active">
+                <p>Please enter your OpenAI API key:</p>
+                <input type="password" id="openaiApiKey" placeholder="sk-..." />
+                <small><a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">Get my OpenAI API key</a></small>
+            </div>
+            <div id="githubInput" class="api-input">
+                <p>Please enter your GitHub Access Token:</p>
+                <input type="password" id="githubToken" placeholder="ghp-..." />
+                <small><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank">How to get a GitHub token?</a></small>
+            </div>
+            <div class="popup-buttons">
+                <button onclick="storeApiKey()">Submit</button>
+                <button onclick="closePopup()">Close</button>
+            </div>
         </div>
     </div>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js" SameSite=None></script>
     <script src="/script.js"></script>
