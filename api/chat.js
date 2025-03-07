@@ -20,7 +20,7 @@ const API_CONFIGS = {
 };
 
 // Export the handler function directly
-module.exports = async function handler(req, res) {
+module.exports = async (req, res) => {
     // Log request details for debugging
     console.log('Request received:', {
         method: req.method,
