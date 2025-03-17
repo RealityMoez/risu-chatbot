@@ -23,10 +23,5 @@
             "dest": "/public/$1",
             "continue": true
         }
-    ],
-    "functions": {
-        "api/chat.js": {
-            "maxDuration": 30
-        }
-    }
+    ]
 }
