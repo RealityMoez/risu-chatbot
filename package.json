@@ -1,13 +1,21 @@
 {
-  "name": "risu-chatbot",
+  "name": "chatbot",
   "version": "1.0.0",
-  "description": "A chatbot application using OpenAI or GitHub API",
-  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "start": "vercel start",
+    "deploy": "vercel deploy"
+  },
   "dependencies": {
-    "axios": "^1.6.0",
-    "cookie": "^0.5.0"
+    "axios": "^1.5.0",
+    "cookie": "^1.0.2",
+    "openai": "^4.20.0"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   }
 }

@@ -1,4 +1,3 @@
-// Vercel Serverless Function for Chat API
 const axios = require('axios');
 const cookie = require('cookie');
 
@@ -6,12 +5,12 @@ const cookie = require('cookie');
 const API_CONFIGS = {
     openai: {
         baseURL: 'https://api.openai.com/v1/chat/completions',
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4o',
         validateKey: (key) => key.startsWith('sk-') && key.length >= 40
     },
     github: {
         baseURL: 'https://models.inference.ai.azure.com/chat/completions',
-        model: 'o3-mini',
+        model: 'gpt-4o',
         validateKey: (key) => key.startsWith('ghp_') || key.startsWith('github_pat_'),
         headers: {
             'Accept': 'application/json',
@@ -104,11 +103,11 @@ module.exports = async (req, res) => {
             requestData = {
                 model: apiConfig.model,
                 messages: conversation,
-                temperature: 0.7,
-                max_tokens: 600,
+                temperature: 0.5,
+                max_tokens: 100,
                 top_p: 1,
-                frequency_penalty: 0.8,
-                presence_penalty: 0.6
+                frequency_penalty: 0,
+                presence_penalty: 0
             };
         }
 
