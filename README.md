@@ -1,3 +1,3 @@
-# OpenAI GPT Chat bot
+# Risu chat bot
 
 Still in development..
