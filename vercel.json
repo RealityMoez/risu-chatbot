@@ -4,9 +4,6 @@
         {
             "src": "./api/chat.js",
             "use": "@vercel/node",
-            "config": {
-                "maxDuration": 30
-            }
         },
         {
             "src": "./public/**",
@@ -16,11 +13,7 @@
     "routes": [
         {
             "src": "/api/chat",
-            "dest": "/api/chat.js",
-            "methods": ["GET", "POST", "OPTIONS"]
-        },
-        {
-            "handle": "filesystem"
+            "dest": "/api/chat.js"
         },
         {
             "src": "/(.*)",
