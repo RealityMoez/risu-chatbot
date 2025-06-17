@@ -96,7 +96,7 @@ module.exports = async (req, res) => {
             requestData = {
                 messages: formattedMessages,
                 model: apiConfig.model,
-                temperature: 1,
+                temperature: 0.5,
                 max_completion_tokens: 50,
                 top_p: 0.1,
                 logprobs: true,
