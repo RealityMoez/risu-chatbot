@@ -6,11 +6,18 @@ const API_CONFIGS = {
     openai: {
         baseURL: 'https://api.openai.com/v1/chat/completions',
         model: 'gpt-4o',
+        temperature: 1,
+        max_completion_tokens: 50,
+        top_p: 0.1,
+        logprobs: true,
+        top_logprobs: 20,
+        frequency_penalty: 1.7,
+        presence_penalty: 1.5,
         validateKey: (key) => key.startsWith('sk-') && key.length >= 40
     },
     github: {
         baseURL: 'https://models.inference.ai.azure.com/chat/completions',
-        model: 'gpt-4o',
+        model: 'gpt-4.1',
         validateKey: (key) => key.startsWith('ghp_') || key.startsWith('github_pat_'),
         headers: {
             'Accept': 'application/json',
@@ -83,15 +90,19 @@ module.exports = async (req, res) => {
             // GitHub API requires specific role values (developer, user, assistant)
             const formattedMessages = conversation.map(msg => {
                 // Keep system messages as developer role for GitHub API
-                if (msg.role === 'system') {
-                    return { role: 'developer', content: msg.content };
-                }
-                return msg;
+                return { role: 'developer', content: msg.content };
             });
             
             requestData = {
                 messages: formattedMessages,
-                model: apiConfig.model
+                model: apiConfig.model,
+                temperature: 1,
+                max_completion_tokens: 50,
+                top_p: 0.1,
+                logprobs: true,
+                top_logprobs: 20,
+                frequency_penalty: 1.7,
+                presence_penalty: 1.5
             };
         } else {
             // OpenAI API setup
@@ -102,12 +113,7 @@ module.exports = async (req, res) => {
             
             requestData = {
                 model: apiConfig.model,
-                messages: conversation,
-                temperature: 0.5,
-                max_tokens: 100,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0
+                messages: conversation
             };
         }
 
@@ -115,7 +121,8 @@ module.exports = async (req, res) => {
         console.log('Making API request:', {
             url: apiConfig.baseURL,
             model: apiConfig.model,
-            headers: { ...headers, Authorization: '***' }
+            temperature: apiConfig.temperature,
+            headers: { ...headers}
         });
 
         const response = await axios.post(
@@ -188,8 +195,8 @@ module.exports = async (req, res) => {
         if (error.response?.status === 429) {
             return res.status(429).json({ 
                 message: apiType === 'openai' 
-                    ? 'OpenAI rate limit exceeded. Consider switching to GitHub token.'
-                    : 'GitHub API rate limit exceeded.'
+                    ? 'OpenAI API rate limit exceeded.'
+                    : `GitHub API rate limit exceeded. [${error}]`
             });
         }
 
