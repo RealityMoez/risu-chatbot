@@ -97,7 +97,7 @@ module.exports = async (req, res) => {
                 messages: formattedMessages,
                 model: apiConfig.model,
                 temperature: 0.5,
-                max_completion_tokens: 50,
+                max_completion_tokens: 1000,
                 top_p: 0.1,
                 logprobs: true,
                 top_logprobs: 20,

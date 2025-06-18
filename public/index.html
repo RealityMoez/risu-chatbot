@@ -28,9 +28,7 @@
             Developed by <a aria-label="Author" href="https://github.com/realitymoez" target="_blank"
                 rel="noopener">RealityMoez</a>
         </h3>
-    </footer>
-
-    <div id="popup" class="popup">
+    </footer>    <div id="popup" class="popup">
         <div class="popup-content">
             <h2>API Key Required</h2>
             <div class="api-toggle">
@@ -39,12 +37,12 @@
             </div>
             <div id="openaiInput" class="api-input active">
                 <p>Please enter your OpenAI API key:</p>
-                <input type="password" id="openaiApiKey" placeholder="sk-..." />
-                <small><a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">Get my OpenAI API key</a></small>
+                <input type="password" id="openaiApiKey" placeholder="sk-..." autocomplete="off" />
+                <small><a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">Get OpenAI API key</a></small>
             </div>
             <div id="githubInput" class="api-input">
                 <p>Please enter your GitHub Access Token:</p>
-                <input type="password" id="githubToken" placeholder="ghp-..." />
+                <input type="password" id="githubToken" placeholder="ghp-..." autocomplete="off" />
                 <small><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank">How to get a GitHub token?</a></small>
             </div>
             <div class="popup-buttons">
