@@ -22,7 +22,7 @@ const GITHUB_MODELS = [
     {
         id: 'deepseekV3',
         displayName: 'DeepSeek V3 March',
-        modelId: 'DeepSeek-R1-0528',
+        modelId: 'DeepSeek-V3-0324',
         endpoint: 'https://models.github.ai/inference',
         sdk: 'azure-ai-inference'
     },
