@@ -13,7 +13,15 @@
 <body>
 
     <div class="chat-container">
-        <div class="chat-header">Risu</div>
+        <div class="chat-header">
+            <span>Risu</span>
+            <div id="modelSelection" class="model-selection" style="display: none;">
+                <label for="modelSelect">Model:</label>
+                <select id="modelSelect" onchange="changeModel(this.value)">
+                    <!-- Options will be dynamically generated -->
+                </select>
+            </div>
+        </div>
         <div class="chat-messages-container">
             <!-- chat messages will be appended here -->
         </div>
