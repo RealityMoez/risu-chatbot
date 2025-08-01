@@ -5,20 +5,20 @@ ___Still in development..___
 
 ## Features
 
-- **Multiple AI Provider**: Choose between OpenAI GPT-4o and GitHub Models (more coming soon)
+- **Multiple AI Provider**: Choose between OpenAI and GitHub Models
 - **Secure API Key Management**: Cookie-based storage with automatic validation
 - **Character Consistency**: Risu maintains personality and context throughout conversations
 
 ## API Providers
 
-### OpenAI GPT-4o
-- **Model**: `gpt-4o` (add others on request)
+### OpenAI
+- **Models**: `gpt-4o` (add others on request)
 - **Requirements**: Valid OpenAI API key (starts with `sk-`)
 - **Features**: Faster responses, longer context and high requests per minute
 
 ### GitHub Models
-- **Model**: `gpt-4.1`, `DeepSeek V3`, `Mistrall Small` (more to be added)
-- **Requirements**: GitHub Personal Access Token or GitHub App token
+- **Models**: `gpt-4.1`, `DeepSeek V3`, `Mistrall Small` (more to be added)
+- **Requirements**: GitHub Personal Access Token
 - **Features**: Free tier available, Azure-hosted inference
 
 ## Setup & Usage
@@ -53,13 +53,12 @@ npm run dev
 
 ## Requirements
 
-- **Node.js**: 22.x (specified in package.json)
+- **Node.js**: 22.x
 - **npm**
 
 ## Architecture
 
 - **Frontend**: Vanilla JavaScript, HTML, CSS (no frameworks)
-- **Backend**: Node.js serverless functions on Vercel
-- **API Endpoint**: Single `/api/chat` endpoint
-- **Storage**: Browser cookies for API key management
-- **Deployment**: Vercel platform with automatic HTTPS
+- **Backend**: Node.js serverless proxy for secure API key handling and CORS
+- **API Endpoint**: Single `/api/chat` endpoint supporting multiple AI providers
+- **Deployment**: Vercel serverless platform 
