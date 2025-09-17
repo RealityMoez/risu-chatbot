@@ -14,12 +14,12 @@ ___Still in development..___
 ### OpenAI
 - **Models**: `gpt-4o` (add others on request)
 - **Requirements**: Valid OpenAI API key (starts with `sk-`)
-- **Features**: Faster responses, longer context and high requests per minute
+- **Pros**: Faster responses, longer context and high requests per minute
 
 ### GitHub Models
 - **Models**: `gpt-4.1`, `DeepSeek V3`, `Mistrall Small` (more to be added)
 - **Requirements**: GitHub Personal Access Token
-- **Features**: Free tier available, Azure-hosted inference
+- **Pros**: Free tier available, Azure-hosted inference
 
 ## Setup & Usage
 
@@ -38,11 +38,11 @@ npm run dev
 2. On first visit, you'll see an API key popup
 3. Choose your preferred provider (OpenAI or GitHub)
 4. Enter your API key/token
-5. Start chatting with Risu!
+5. Start chatting with Risu :)
 
 ### 4. API Key Management
-- Keys are stored securely in browser cookies
-- Switch providers anytime through the interface
+- Keys are stored securely in browser cookies, you can clear them if you want to change API key/provider
+- Switch provider/model through the interface anytime  mid-conversation without losing chat context/history
 - Invalid keys are automatically cleared with helpful error messages
 
 ## Production
@@ -60,5 +60,5 @@ npm run dev
 
 - **Frontend**: Vanilla JavaScript, HTML, CSS (no frameworks)
 - **Backend**: Node.js serverless proxy for secure API key handling and CORS
-- **API Endpoint**: Single `/api/chat` endpoint supporting multiple AI providers
+- **API Endpoint**: Single `/api/chat` endpoint
 - **Deployment**: Vercel serverless platform 
